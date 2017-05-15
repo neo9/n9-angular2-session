@@ -1,0 +1,26 @@
+{
+  "name": "n9-angular2-session",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/repo"
+  },
+  "author": {
+    "name": "Gaetan SENN",
+    "email": "gaetan.senn@gmail.com"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/username/repo/issues"
+  },
+  "module": "n9-angular2-session.js",
+  "typings": "n9-angular2-session.d.ts",
+  "peerDependencies": {
+    "n9-angular2-storage": "^2.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  }
+}
