@@ -21,6 +21,10 @@ import { AppComponent } from './app.component';
 // Import your library
 import { N9SessionModule } from 'n9-angular2-session';
 
+export interface TestExtend extends SessionType {
+	deviceType: string
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -28,8 +32,8 @@ import { N9SessionModule } from 'n9-angular2-session';
   imports: [
     BrowserModule,
 
-    // Specify the library as an import
-    N9SessionModule.forRoot()
+    // Specify the library as an import and implement your SessionType extend if you want to add new field to the default SessionType
+    N9SessionModule.forRoot<TestExtend>()
   ],
   providers: [],
   bootstrap: [AppComponent]

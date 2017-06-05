@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { N9SessionService } from "./n9-session.service";
+import { N9SessionService, SessionType } from "./n9-session.service";
 import { N9StorageModule, N9StorageService } from "n9-angular2-storage";
 
-export function createSessionService(neo9Storage: N9StorageService) {
+export function createSessionService<T extends SessionType>(neo9Storage: N9StorageService) {
   return new N9SessionService(neo9Storage);
 }
 
@@ -14,7 +14,7 @@ export * from './n9-session.service';
   ]
 })
 export class N9SessionModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot<T extends SessionType>(): ModuleWithProviders {
     return {
       ngModule: N9SessionModule,
       providers: [

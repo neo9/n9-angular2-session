@@ -13,42 +13,34 @@ export declare type SessionType = {
 }
 
 @Injectable()
-export class N9SessionService {
-  private session: SessionType;
+export class N9SessionService<T extends SessionType> {
+  private session: T;
   private loggedIn: Subject<any> = new Subject<any>();
   private loggedOut: Subject<any> = new Subject<any>();
 
   constructor(public storage: N9StorageService) { }
 
-  public load(): Observable<SessionType> {
-    return Observable.from(this.storage.get('session')).do((session: SessionType) => {
+  public load(): Observable<T> {
+    return Observable.from(this.storage.get('session')).do((session: T) => {
       this.session = session;
       this.loggedIn.next(session);
     });
   }
 
-  public open(session: any, rememberMe: boolean): Observable<any> {
+  public open(session: T, rememberMe: boolean): Observable<T> {
     return new Observable((observer: any) => {
       this.storage.del('session');
 
-      return observer.next({ token: session.token });
+      return observer.next(session);
     }).do(() => {
-      this.loggedIn.next(session.token);
-    }).map(() => {
-      let parsedSession = this.session = {
-        token: session.token
-      };
+      this.loggedIn.next(session);
+      this.session = session;
 
-      if (rememberMe) {
-        this.storage.set('session', parsedSession);
-        return this.session;
-      } else {
-        return this.session;
-      }
+      if (rememberMe) this.storage.set('session', session);
     });
   }
 
-  public get() {
+  public get(): T {
     return this.session;
   }
 
@@ -58,9 +50,9 @@ export class N9SessionService {
     return new Observable((observer: any) => {
       this.storage.del('session');
 
-      observer.next();
+      return observer.next({});
     }).do(() => {
-      this.loggedOut.next();
+      this.loggedOut.next({});
     });
   }
 

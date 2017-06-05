@@ -65,7 +65,8 @@
     "tslint": "~4.5.0",
     "tslint-eslint-rules": "^4.0.0",
     "typescript": "~2.2.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "lodash": "^4.17.4"
   },
   "engines": {
     "node": ">=6.0.0"
