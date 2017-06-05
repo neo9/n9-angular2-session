@@ -1,6 +1,6 @@
 {
   "name": "n9-angular2-session",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "preversion": "npm run lint",
     "version": "npm build",
