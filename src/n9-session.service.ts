@@ -6,7 +6,7 @@ import "rxjs/add/observable/from";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 
-import { N9StorageService } from "n9-angular2-storage";
+import { N9StorageService } from "@neo9/n9-angular2-storage";
 
 export declare type SessionType = {
   token: string;
