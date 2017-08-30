@@ -30,7 +30,7 @@
     "url": "https://github.com/username/repo/issues"
   },
   "devDependencies": {
-    "n9-angular2-storage": "^0.2.0",
+    "@neo9/n9-angular2-storage": "^0.2.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/compiler-cli": "^4.0.0",

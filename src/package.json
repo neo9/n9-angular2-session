@@ -19,7 +19,7 @@
   "module": "n9-angular2-session.js",
   "typings": "n9-angular2-session.d.ts",
   "peerDependencies": {
-    "n9-angular2-storage": "^0.2.0",
+    "@neo9/n9-angular2-storage": "^0.2.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   }
