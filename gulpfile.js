@@ -14,29 +14,29 @@ const tmpFolder = path.join(rootFolder, '.tmp');
 const buildFolder = path.join(rootFolder, 'build');
 const distFolder = path.join(rootFolder, 'dist');
 
-require('gulp-release-tag')(gulp);
+require('@neo9/gulp-release-tag')(gulp);
 
 /**
- * 1. Delete /dist folder
- */
+* 1. Delete /dist folder
+*/
 gulp.task('clean:dist', function () {
   return deleteFolders([distFolder]);
 });
 
 /**
- * 2. Clone the /src folder into /.tmp. If an npm link inside /src has been made,
- *    then it's likely that a node_modules folder exists. Ignore this folder
- *    when copying to /.tmp.
- */
+* 2. Clone the /src folder into /.tmp. If an npm link inside /src has been made,
+*    then it's likely that a node_modules folder exists. Ignore this folder
+*    when copying to /.tmp.
+*/
 gulp.task('copy:source', function () {
   return gulp.src([`${srcFolder}/**/*`, `!${srcFolder}/node_modules`])
     .pipe(gulp.dest(tmpFolder));
 });
 
 /**
- * 3. Inline template (.html) and style (.css) files into the the component .ts files.
- *    We do this on the /.tmp folder to avoid editing the original /src files
- */
+* 3. Inline template (.html) and style (.css) files into the the component .ts files.
+*    We do this on the /.tmp folder to avoid editing the original /src files
+*/
 gulp.task('inline-resources', function () {
   return Promise.resolve()
     .then(() => inlineResources(tmpFolder));
@@ -44,9 +44,9 @@ gulp.task('inline-resources', function () {
 
 
 /**
- * 4. Run the Angular compiler, ngc, on the /.tmp folder. This will output all
- *    compiled modules to the /build folder.
- */
+* 4. Run the Angular compiler, ngc, on the /.tmp folder. This will output all
+*    compiled modules to the /build folder.
+*/
 gulp.task('ngc', function () {
   return ngc({
     project: `${tmpFolder}/tsconfig.es5.json`
@@ -61,9 +61,9 @@ gulp.task('ngc', function () {
 });
 
 /**
- * 5. Run rollup inside the /build folder to generate our Flat ES module and place the
- *    generated file into the /dist folder
- */
+* 5. Run rollup inside the /build folder to generate our Flat ES module and place the
+*    generated file into the /dist folder
+*/
 gulp.task('rollup:fesm', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
     // transform the files here.
@@ -88,9 +88,9 @@ gulp.task('rollup:fesm', function () {
 });
 
 /**
- * 6. Run rollup inside the /build folder to generate our UMD module and place the
- *    generated file into the /dist folder
- */
+* 6. Run rollup inside the /build folder to generate our UMD module and place the
+*    generated file into the /dist folder
+*/
 gulp.task('rollup:umd', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
     // transform the files here.
@@ -98,7 +98,7 @@ gulp.task('rollup:umd', function () {
 
       // Bundle's entry point
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
-      entry: `${buildFolder}/index.js`,
+      input: `${buildFolder}/index.js`,
 
       // A list of IDs of modules that should remain external to the bundle
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#external
@@ -118,7 +118,7 @@ gulp.task('rollup:umd', function () {
       // The name to use for the module for UMD/IIFE bundles
       // (required for bundles with exports)
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#modulename
-      moduleName: 'test',
+      name: 'test',
 
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals
       globals: {
@@ -131,33 +131,33 @@ gulp.task('rollup:umd', function () {
 });
 
 /**
- * 7. Copy all the files from /build to /dist, except .js files. We ignore all .js from /build
- *    because with don't need individual modules anymore, just the Flat ES module generated
- *    on step 5.
- */
+* 7. Copy all the files from /build to /dist, except .js files. We ignore all .js from /build
+*    because with don't need individual modules anymore, just the Flat ES module generated
+*    on step 5.
+*/
 gulp.task('copy:build', function () {
   return gulp.src([`${buildFolder}/**/*`, `!${buildFolder}/**/*.js`])
     .pipe(gulp.dest(distFolder));
 });
 
 /**
- * 8. Copy package.json from /src to /dist
- */
+* 8. Copy package.json from /src to /dist
+*/
 gulp.task('copy:manifest', function () {
   return gulp.src([`${srcFolder}/package.json`])
     .pipe(gulp.dest(distFolder));
 });
 
 /**
- * 9. Delete /.tmp folder
- */
+* 9. Delete /.tmp folder
+*/
 gulp.task('clean:tmp', function () {
   return deleteFolders([tmpFolder]);
 });
 
 /**
- * 10. Delete /build folder
- */
+* 10. Delete /build folder
+*/
 gulp.task('clean:build', function () {
   return deleteFolders([buildFolder]);
 });
@@ -185,8 +185,8 @@ gulp.task('compile', function () {
 });
 
 /**
- * Watch for any change in the /src folder and compile files
- */
+* Watch for any change in the /src folder and compile files
+*/
 gulp.task('watch', function () {
   gulp.watch(`${srcFolder}/**/*`, ['compile']);
 });
@@ -198,8 +198,8 @@ gulp.task('build:watch', ['build', 'watch']);
 gulp.task('default', ['build:watch']);
 
 /**
- * Deletes the specified folder
- */
+* Deletes the specified folder
+*/
 function deleteFolders(folders) {
   return del(folders);
 }
