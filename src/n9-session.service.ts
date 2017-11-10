@@ -3,6 +3,7 @@ import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 
 import "rxjs/add/observable/from";
+import "rxjs/add/observable/of";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 
@@ -38,6 +39,12 @@ export class N9SessionService<T extends SessionType> {
 
       if (rememberMe) this.storage.set('session', session);
     });
+  }
+
+  public refresh(session: T): Observable<T> {
+    this.storage.set('session', session);
+
+    return Observable.of(session);
   }
 
   public get(): T {
