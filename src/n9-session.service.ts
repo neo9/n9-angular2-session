@@ -22,22 +22,23 @@ export class N9SessionService<T extends SessionType> {
   constructor(public storage: N9StorageService) { }
 
   public load(): Observable<T> {
-    return Observable.from(this.storage.get('session')).do((session: T) => {
+    return Observable.from(this.storage.get('session')).map((session: T) => {
       this.session = session;
       this.loggedIn.next(session);
+
+      return session;
     });
   }
 
   public open(session: T, rememberMe: boolean): Observable<T> {
     return new Observable((observer: any) => {
       this.storage.del('session');
-
-      return observer.next(session);
-    }).do(() => {
       this.loggedIn.next(session);
       this.session = session;
 
       if (rememberMe) this.storage.set('session', session);
+
+      return observer.next(session);
     });
   }
 
