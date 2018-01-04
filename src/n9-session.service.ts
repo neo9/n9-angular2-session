@@ -33,11 +33,11 @@ export class N9SessionService<T extends SessionType> {
   public open(session: T, rememberMe: boolean): Observable<T> {
     return new Observable((observer: any) => {
       this.storage.del('session');
-      this.loggedIn.next(session);
       this.session = session;
 
       if (rememberMe) this.storage.set('session', session);
 
+      this.loggedIn.next(session);
       return observer.next(session);
     });
   }
