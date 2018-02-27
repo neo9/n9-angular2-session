@@ -6,6 +6,7 @@ import "rxjs/add/observable/from";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
+import 'rxjs/add/observable/fromPromise';
 
 import { N9StorageService } from "@neo9/n9-angular2-storage";
 
@@ -43,25 +44,22 @@ export class N9SessionService<T extends SessionType> {
   }
 
   public refresh(session: T): Observable<T> {
-    this.storage.set('session', session);
-
-    return Observable.of(session);
+    return Observable.fromPromise(this.storage.set('session', session).then(() => {
+      return session;
+    }));
   }
 
   public get(): T {
     return this.session;
   }
 
+
   public close(): Observable<any> {
     this.session = null;
 
-    return new Observable((observer: any) => {
-      this.storage.del('session');
-
-      return observer.next({});
-    }).do(() => {
+    return Observable.fromPromise(this.storage.del('session').then(() => {
       this.loggedOut.next({});
-    });
+    }));
   }
 
   public getLoggedIn(): Observable<any> {
