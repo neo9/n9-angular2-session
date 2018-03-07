@@ -25,7 +25,7 @@ export class N9SessionService<T extends SessionType> {
   public load(): Observable<T> {
     return Observable.from(this.storage.get('session')).map((session: T) => {
       this.session = session;
-      this.loggedIn.next(Object.assign({ fromLoad: true }, session))
+      this.loggedIn.next(session);
 
       return session;
     });
@@ -38,7 +38,7 @@ export class N9SessionService<T extends SessionType> {
 
       if (rememberMe) this.storage.set('session', session);
 
-      this.loggedIn.next(Object.assign({ fromOpen: true }, session));
+      this.loggedIn.next(session);
       return observer.next(session);
     });
   }
