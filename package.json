@@ -1,6 +1,6 @@
 {
   "name": "@neo9/n9-angular2-session",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "scripts": {
     "preversion": "npm run lint",
     "version": "npm build",
