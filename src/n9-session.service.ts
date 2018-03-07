@@ -12,6 +12,8 @@ import { N9StorageService } from "@neo9/n9-angular2-storage";
 
 export declare type SessionType = {
   token: string;
+  fromLoad?: boolean;
+  fromOpen?: boolean;
 }
 
 @Injectable()
