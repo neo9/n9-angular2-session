@@ -1,3 +1,4 @@
+# No longer actively maintained
 # n9-angular2-session
 
 ## Installation
